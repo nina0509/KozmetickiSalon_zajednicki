@@ -10,43 +10,95 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author ninic
+ * Predstavlja statistiku u sistemu kozmetičkog salona za određenu godinu.
+ * Klasa sadrži informacije o ukupnom broju rezervacija za određenu godinu, kao i listu stavki statistike.
+ * Implementira interfejs OpstiDomenskiObjekat, koji definiše metode za rad sa bazom podataka.
+ * 
+ * @author Nikolina Baros
  */
 public class Statistika implements OpstiDomenskiObjekat {
     
+     /** 
+      * Godina na koju se odnose statistički podaci.
+      */
     private int godina;
+
+    /** 
+     * Ukupan broj rezervacija za zadatu godinu. 
+     */
     private int ukupnoRezervacija;
+      /** 
+       * Lista stavki statistike koje su deo statistike za tu godinu. 
+       */
     List<StavkaStatistike> stavke=new ArrayList<>();
 
+    /**
+     *Podrazumevani, prazan konstruktor bez parametara za kreiranje nove instance klase Statistika.
+     */
     public Statistika() {
     }
 
+    /**
+     * Konstruktor koji inicijalizuje objekat klase Statistika sa prosleđenim vrednostima.
+     * 
+     * @param godina Godina za koju se prikupljaju statistički podaci.
+     * @param ukupnoRezervacija Ukupan broj rezervacija za zadatu godinu.
+     */
     public Statistika(int godina, int ukupnoRezervacija) {
         this.godina = godina;
         this.ukupnoRezervacija = ukupnoRezervacija;
     }
 
+    /**
+     * Vraća godinu na koju se odnosi statistika.
+     * 
+     * @return Godina na koju se odnosi statistika kao ceo broj.
+     */
     public int getGodina() {
         return godina;
     }
 
+     /**
+     * Postavlja godinu na koju se odnosi statistika na prosledjenu vrednost.
+     * 
+     * @param godina Nova vrednost godine na koju se odnosi statistika kao ceo broj.
+     */
     public void setGodina(int godina) {
         this.godina = godina;
     }
 
+    /**
+     * Vraća ukupan broj rezervacija za zadatu godinu.
+     * 
+     * @return Ukupan broj rezervacija za zadatu godinu kao ceo broj.
+     */
     public int getUkupnoRezervacija() {
         return ukupnoRezervacija;
     }
 
+    /**
+     * Postavlja ukupan broj rezervacija za zadatu godinu na prosledjenu vrednost.
+     * 
+     * @param ukupnoRezervacija Ukupan broj rezervacija za zadatu godinu kao ceo broj.
+     */
     public void setUkupnoRezervacija(int ukupnoRezervacija) {
         this.ukupnoRezervacija = ukupnoRezervacija;
     }
 
+    /**
+     * Vraća listu stavki statistike koje su deo statistike.
+     * 
+     * @return Lista stavki statistike tipa List koja sadrzi elemente tipa StavkaStatistike.
+     */
     public List<StavkaStatistike> getStavke() {
         return stavke;
     }
 
+     /**
+     * Postavlja listu stavki statistike koje su deo statistike na prosledjenu vrednost.
+     * 
+     * @param stavke Nova lista stavki statistike tipa List koja sadrzi elemente tipa StavkaStatistike..
+     */
     public void setStavke(List<StavkaStatistike> stavke) {
         this.stavke = stavke;
     }
@@ -80,7 +132,11 @@ public class Statistika implements OpstiDomenskiObjekat {
     
     
     
-    
+    /**
+     * Vraca naziv tabele u bazi podataka koja odgovara klasi Statistika.
+     * 
+     * @return Naziv tabele "statistika" kao String.
+     */
     @Override
     public String vratiNazivTabele() {
 return "statistika";
@@ -88,6 +144,13 @@ return "statistika";
 
     
     
+    /**
+     * Kreira listu statistika na osnovu rezultata upita iz baze podataka.
+     * 
+     * @param rs Rezultat upita iz baze podataka u obliku ResultSet-a.
+     * @return Lista statistika kreirana na osnovu rezultata upita.
+     * @throws Exception u slucaju greske tokom obrade rezultata upita.
+     */
     @Override
     public List<OpstiDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
 
@@ -104,6 +167,12 @@ return "statistika";
         return lista;
     }
 
+    
+    /**
+     * Vraca nazive kolona koje se koriste prilikom unosa podataka u tabelu Statistika u bazi.
+     * 
+     * @return Nazivi kolona tabele statistika kao String.
+     */
     @Override
     public String vratiKoloneZaInsert() {
 
@@ -111,6 +180,12 @@ return "statistika";
 
     }
 
+    
+    /**
+     * Vraca vrednosti koje se koriste prilikom azuriranja podataka u tabeli Statistika u bazi.
+     * 
+     * @return Vrednosti za azuriranje podataka u tabeli statistika kao String.
+     */
     @Override
     public String vratiVrednostiZaUpdate() {
     
@@ -118,6 +193,12 @@ return "statistika";
 
     }
 
+    
+    /**
+     * Vraca vrednosti koje se koriste prilikom unosa podataka u tabelu statistika u bazi.
+     * 
+     * @return Vrednosti za unos podataka u tabelu statistika u bazi kao String.
+     */
     @Override
      public String vratiVrednostiZaInsert() {
     
@@ -125,6 +206,12 @@ return "statistika";
 
     }
 
+     
+     /**
+     * Vraca primarni kljuc koji se koristi za identifikaciju zapisa u tabeli statistika u bazi .
+     * 
+     * @return Primarni kljuc tabele statistika kao String.
+     */
     @Override
     public String vratiPrimarniKljuc() {
       

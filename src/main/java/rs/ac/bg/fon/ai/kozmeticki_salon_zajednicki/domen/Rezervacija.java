@@ -279,7 +279,7 @@ public class Rezervacija implements OpstiDomenskiObjekat {
     /**
      * Vraca vrednosti koje se koriste prilikom azuriranja podataka u tabeli Rezervacija u bazi.
      * 
-     * @return Vrednosti za azuriranje podataka u tabeli reyervacija kao String.
+     * @return Vrednosti za azuriranje podataka u tabeli rezervacija kao String.
      */
     @Override
     public String vratiVrednostiZaUpdate() {
