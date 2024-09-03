@@ -121,7 +121,7 @@ public class TipUsluge implements OpstiDomenskiObjekat {
 
        
  /**
-     * Kreira listu stavki tipova usluge na osnovu rezultata upita iz baze podataka.
+     * Kreira listu tipova usluge na osnovu rezultata upita iz baze podataka.
      * 
      * @param rs Rezultat upita iz baze podataka u obliku ResultSet-a.
      * @return Lista tipova usluge kreirana na osnovu rezultata upita.
