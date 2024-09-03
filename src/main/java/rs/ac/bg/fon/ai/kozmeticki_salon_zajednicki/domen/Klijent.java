@@ -10,13 +10,13 @@ import java.util.Objects;
 
 
 /**
- * Predstavlja klijenta u sistemu kozmetičkog salona sa imenom,
+ * Predstavlja klijenta u sistemu kozmetičkog salona sa id-jem imenom,
  * prezimenom, brojem telefona i datumom rodjenja.
  *  
  * Implementira interfejs OpstiDomenskiObjekat, koji definiše metode za 
  * operacije nad bazom podataka.
  * 
- * @author ninic
+ * @author Nikolina Baros
  */
 public class Klijent implements OpstiDomenskiObjekat {
 
@@ -61,7 +61,7 @@ public class Klijent implements OpstiDomenskiObjekat {
     /**
      * Konstruktor sa parametrima za kreiranje novog Klijenta.
      * 
-     * @param klijentId ID klijenta.
+     * @param klijentId Jedinstveni identifikator klijenta.
      * @param ime Ime klijenta.
      * @param prezime Prezime klijenta.
      * @param brTel Broj telefona klijenta.
