@@ -239,7 +239,7 @@ public class StavkaRezervacije implements OpstiDomenskiObjekat {
 
     
     /**
-     * Kreira listu rezervacija na osnovu rezultata upita iz baze podataka.
+     * Kreira listu stavki rezervacije na osnovu rezultata upita iz baze podataka.
      * 
      * @param rs Rezultat upita iz baze podataka u obliku ResultSet-a.
      * @return Lista stavki rezervacije kreirana na osnovu rezultata upita.
