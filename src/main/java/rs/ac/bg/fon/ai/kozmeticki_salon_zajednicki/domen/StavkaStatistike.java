@@ -14,6 +14,10 @@ import java.util.Objects;
  * određene usluge unutar određene godine.
  * Stavka sadrzi podatke o statistici na koju se odnosi, usluge na koju se odnosi i broja rezervacija usluge.
  * 
+ * 
+ * Implementira interfejs OpstiDomenskiObjekat, koji definiše metode za 
+ * operacije nad bazom podataka.
+ * 
  * @author Nikolina Baros
  */
 public class StavkaStatistike implements OpstiDomenskiObjekat{
