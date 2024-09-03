@@ -117,6 +117,7 @@ public enum Operacija implements Serializable{
      */
     ZAPAMTI_STATISTIKE
     
+    
    
     
     
