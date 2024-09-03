@@ -11,21 +11,60 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- *
- * @author ninic
+ * Predstavlja rezervaciju u sistemu kozmetičkog salona. Klasa sadrzi podatke
+ * o klijentu za koga se pravi rezervacija, datum rezervacije,
+ * ukupnoj ceni rezervacije, status pojavljivanja i 
+ * listu stavki rezervacije.
+ *  
+ * Implementira interfejs OpstiDomenskiObjekat, koji definiše metode za 
+ * operacije nad bazom podataka.
+ * 
+ * @author Nikolina Baros
  */
 public class Rezervacija implements OpstiDomenskiObjekat {
 
+    /** 
+     * Jedinstveni identifikator rezervacije. 
+     */
     private int rezervacijaId;
+     /**
+      * Datum za koji je kreirana rezervacija.
+      */
     private Date datum;
+    /** 
+     * Ukupna cena rezervacije.
+     */
     private int ukupnaCena;
+    
+    /** 
+     * Status koji pokazuje da li se klijent pojavio na zakazanom terminu.
+     */
     private boolean pojavljivanje;
+     /**
+      * Klijent koji je napravio rezervaciju.
+      */
     private Klijent klijent;
+    
+    /** 
+     * Lista stavki rezervacije koje su deo ove rezervacije. 
+     */
     private List<StavkaRezervacije> stavke = new ArrayList<>();
 
+    /**
+     *Podrazumevani, prazan konstruktor za kreiranje nove instance klase Rezervacija.
+     */
     public Rezervacija() {
     }
 
+    /**
+     * Konstruktor koji inicijalizuje objekat klase Rezervacija sa prosleđenim vrednostima.
+     * 
+     * @param rezervacijaId Jedinstveni identifikator rezervacije.
+     * @param datum Datum za koji je kreirana rezervacija.
+     * @param ukupnaCena Ukupna cena rezervacije.
+     * @param pojavljivanje Status pojavljivanja klijenta na zakazanom terminu.
+     * @param klijent Klijent koji je napravio rezervaciju.
+     */
     public Rezervacija(int rezervacijaId, Date datum, int ukupnaCena, boolean pojavljivanje, Klijent klijent) {
         this.rezervacijaId = rezervacijaId;
         this.datum = datum;
@@ -34,50 +73,116 @@ public class Rezervacija implements OpstiDomenskiObjekat {
         this.klijent = klijent;
     }
 
+    /**
+     * Vraća jedinstveni identifikator rezervacije.
+     * 
+     * @return Jedinstveni identifikator rezervacije.
+     */
     public int getRezervacijaId() {
         return rezervacijaId;
     }
 
+    
+    /**
+     * Postavlja jedinstveni identifikator rezervacije na prosledjenu vrednost.
+     * 
+     * @param rezervacijaId Novi jedinstveni identifikator rezervacije kao ceo broj.
+     */
     public void setRezervacijaId(int rezervacijaId) {
         this.rezervacijaId = rezervacijaId;
     }
 
+    
+    
+     /**
+     * Vraća datum za koji je kreirana rezervacija.
+     * 
+     * @return Datum za koji je kreirana rezervacija kao Date.
+     */
     public Date getDatum() {
         return datum;
     }
-
+    
+ /**
+     * Postavlja datum za koji je kreirana rezervacija.
+     * 
+     * @param datum Novi datum za koji je kreirana rezervacija kao Date.
+     */
     public void setDatum(Date datum) {
         this.datum = datum;
     }
 
+    
+     /**
+     * Vraća ukupnu cenu rezervacije.
+     * 
+     * @return Ukupna cena rezervacije kao ceo broj.
+     */
     public int getUkupnaCena() {
         return ukupnaCena;
     }
-
+    
+/**
+     * Postavlja ukupnu cenu rezervacije na prosledjenu vrednost.
+     * 
+     * @param ukupnaCena Nova ukupna cena rezervacije kao ceo broj.
+     */
     public void setUkupnaCena(int ukupnaCena) {
         this.ukupnaCena = ukupnaCena;
     }
 
+    
+    /**
+     * Vraća status pojavljivanja klijenta na zakazanom terminu.
+     * 
+     * @return true ako se klijent pojavio, false ako se nije pojavio.
+     */
     public boolean isPojavljivanje() {
         return pojavljivanje;
     }
 
+    /**
+     * Postavlja status pojavljivanja klijenta na zakazanom terminu na prosledjenu vrednost.
+     * 
+     * @param pojavljivanje true ako se klijent pojavio, false ako se nije pojavio.
+     */
     public void setPojavljivanje(boolean pojavljivanje) {
         this.pojavljivanje = pojavljivanje;
     }
 
+    
+     /**
+     * Vraća klijenta koji je napravio rezervaciju.
+     * 
+     * @return Klijent koji je napravio rezervaciju kao instanca klase Klijent.
+     */
     public Klijent getKlijent() {
         return klijent;
     }
 
+     /**
+     * Postavlja klijenta koji je napravio rezervaciju na prosledjenu vrednost.
+     * 
+     * @param klijent Klijent koji je napravio rezervaciju kao instanca klase Klijent.
+     */
     public void setKlijent(Klijent klijent) {
         this.klijent = klijent;
     }
 
+    /**
+     * Vraća listu stavki rezervacije koje su deo ove rezervacije.
+     * 
+     * @return Lista stavki rezervacije kao List sa elementima koji su instanca klase StavkaRezervacije.
+     */
     public List<StavkaRezervacije> getStavke() {
         return stavke;
     }
 
+    /**
+     * Postavlja listu stavki rezervacije koje su deo ove rezervacije na prosledjenu vrednost.
+     * 
+     * @param stavke Lista stavki rezervacije kao List koju cine elementi koji su instance klase StavkaRezervacije.
+     */
     public void setStavke(List<StavkaRezervacije> stavke) {
         this.stavke = stavke;
     }
@@ -106,16 +211,32 @@ public class Rezervacija implements OpstiDomenskiObjekat {
         return Objects.equals(this.datum, other.datum);
     }
 
+    
     @Override
     public String toString() {
         return "Rezervacija{" + "rezervacijaId=" + rezervacijaId + ", datum=" + datum + ", ukupnaCena=" + ukupnaCena + ", pojavljivanje=" + pojavljivanje + ", klijent=" + klijent + ", stavke=" + stavke + '}';
     }
 
+     /**
+     * Vraca naziv tabele u bazi podataka koja odgovara klasi Rezervacija.
+     * 
+     * @return Naziv tabele "rezervacija" kao String.
+     */
     @Override
     public String vratiNazivTabele() {
         return "rezervacija";
     }
 
+    
+    
+    /**
+     * Kreira listu rezervacija na osnovu rezultata upita iz baze podataka.
+     * 
+     * @param rs Rezultat upita iz baze podataka u obliku ResultSet-a.
+     * @return Lista rezervacija kreirana na osnovu rezultata upita.
+     * @throws Exception u slucaju greske tokom obrade rezultata upita.
+     */
+    
     @Override
     public List<OpstiDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
 
@@ -143,23 +264,46 @@ public class Rezervacija implements OpstiDomenskiObjekat {
         return lista;
     }
 
+    
+    /**
+     * Vraca nazive kolona koje se koriste prilikom unosa podataka u tabelu Rezervacija u bazi.
+     * 
+     * @return Nazivi kolona tabele rezervacija kao String.
+     */
     @Override
     public String vratiKoloneZaInsert() {
         return "datum,ukupnaCena,pojavljivanje,klijentId";
     }
 
+    
+    /**
+     * Vraca vrednosti koje se koriste prilikom azuriranja podataka u tabeli Rezervacija u bazi.
+     * 
+     * @return Vrednosti za azuriranje podataka u tabeli reyervacija kao String.
+     */
     @Override
     public String vratiVrednostiZaUpdate() {
         java.sql.Date datum1 = new java.sql.Date(datum.getTime());
         return "datum='" + datum1 + "', ukupnaCena=" + ukupnaCena + ", pojavljivanje=" + pojavljivanje + ", klijentId=" + klijent.getKlijentId();
     }
 
+    
+    /**
+     * Vraca vrednosti koje se koriste prilikom unosa podataka u tabelu rezervacija u bazi.
+     * 
+     * @return Vrednosti za unos podataka u tabelu rezervacija u bazi kao String.
+     */
     @Override
     public String vratiVrednostiZaInsert() {
         java.sql.Date datum1 = new java.sql.Date(datum.getTime());
         return "'" + datum1 + "'," + ukupnaCena + "," + pojavljivanje + "," + klijent.getKlijentId();
     }
 
+     /**
+     * Vraca primarni kljuc koji se koristi za identifikaciju zapisa u tabeli Rezervacija u bazi .
+     * 
+     * @return Primarni kljuc tabele rezervacija kao String.
+     */
     @Override
     public String vratiPrimarniKljuc() {
         return "rezervacija.rezervacijaId=" + rezervacijaId;

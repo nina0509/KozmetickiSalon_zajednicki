@@ -40,7 +40,7 @@ public class Popust implements OpstiDomenskiObjekat {
 
      
     /**
-     *Podrazumevani, prazan konstruktor za kreiranje nove instance Popust.
+     *Podrazumevani, prazan konstruktor za kreiranje nove instance klase Popust.
      */
     
     public Popust() {
