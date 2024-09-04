@@ -61,6 +61,7 @@ public class MenadzerTest extends TestCase {
         Menadzer menadzer1 = new Menadzer(1, "user123", "pass123", "Marko", "Markovic");
         Menadzer menadzer2= new Menadzer(1, "user123", "pass123", "Marko", "Markovic");
         assertTrue(menadzer1.equals(menadzer2));
+           assertTrue(menadzer1.equals(menadzer1));
         menadzer2.setUsername("user12");
         assertFalse(menadzer1.equals(menadzer2));
         assertFalse(menadzer1.equals(new Klijent()));

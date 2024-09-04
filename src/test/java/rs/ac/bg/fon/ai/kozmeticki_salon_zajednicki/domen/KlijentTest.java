@@ -99,6 +99,7 @@ public class KlijentTest extends TestCase{
         Klijent klijent2 = new Klijent(1, "Marko", "Markovic", "123456789", new Date());
         Klijent klijent3 = new Klijent(2, "Ana", "Jovanovic", "987654321", new Date());
        
+          assertEquals(klijent1, klijent1);
         assertEquals(klijent1, klijent2);
         assertNotEquals(klijent1, klijent3);
         assertNotEquals(klijent2, klijent3);

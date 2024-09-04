@@ -110,6 +110,7 @@ public class PopustTest extends TestCase {
         Popust p4=new Popust(k2, u1, 10 , 5);
         Popust p5=new Popust(k2, u2, 10 , 5);
         
+          assertTrue(p1.equals(p1));
         assertTrue(p1.equals(p2));
         assertFalse(p1.equals(p3));
         assertFalse(p1.equals(p4));
