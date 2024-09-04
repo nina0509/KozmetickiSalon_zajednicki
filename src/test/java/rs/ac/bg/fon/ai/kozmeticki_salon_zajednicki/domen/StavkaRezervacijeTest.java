@@ -21,10 +21,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.when;
 
-/**
- *
- * @author ninic
- */
 public class StavkaRezervacijeTest extends TestCase {
 
     StavkaRezervacije sr;
@@ -152,7 +148,7 @@ public class StavkaRezervacijeTest extends TestCase {
 
         java.sql.Time krajSQL = Time.valueOf(kraj);
 
-        when(rs.next()).thenReturn(true).thenReturn(false); // Prvi put vraća true, drugi put false
+        when(rs.next()).thenReturn(true).thenReturn(false); 
 
         // stavke rezervacije
         when(rs.getInt("stavkarezervacije.RBstavke")).thenReturn(1);
@@ -193,8 +189,6 @@ public class StavkaRezervacijeTest extends TestCase {
 
         assertEquals(1, lista.size());
         assertTrue(lista.get(0) instanceof StavkaRezervacije);
-        System.out.println(lista.get(0));
-        System.out.println(stavkaRezervacije);
         assertTrue(lista.get(0).equals(stavkaRezervacije));
 
         assertThrows(java.lang.Exception.class,
