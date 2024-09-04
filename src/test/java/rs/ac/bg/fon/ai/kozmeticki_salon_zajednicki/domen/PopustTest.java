@@ -129,10 +129,11 @@ public class PopustTest extends TestCase {
       @Test
     public void testVratiListu() throws SQLException, Exception {
         
+         Date datum=new Date();
+        java.sql.Date datumSQL=new java.sql.Date(datum.getTime());
         
        ResultSet rs = mock(ResultSet.class);
         when(rs.next()).thenReturn(true).thenReturn(true).thenReturn(false); // Assume two rows
-        when(rs.getInt("popust.popustId")).thenReturn(1).thenReturn(2);
         when(rs.getInt("popust.popust")).thenReturn(10).thenReturn(5);
         when(rs.getInt("popust.brojRezUsluge")).thenReturn(15).thenReturn(6);
 
@@ -141,19 +142,36 @@ public class PopustTest extends TestCase {
         when(rs.getString("klijent.ime")).thenReturn("Marko").thenReturn("Ana");
         when(rs.getString("klijent.prezime")).thenReturn("Markovic").thenReturn("Jovanovic");
         when(rs.getString("klijent.brTel")).thenReturn("123456789").thenReturn("987654321");
-        when(rs.getDate("klijent.datRodj")).thenReturn(new java.sql.Date(new Date().getTime()));
+        when(rs.getDate("klijent.datRodj")).thenReturn(datumSQL);
 
         // usluge
         when(rs.getInt("usluga.uslugaId")).thenReturn(201).thenReturn(202);
         when(rs.getString("usluga.naziv")).thenReturn("Masaza").thenReturn("Frizura");
         when(rs.getInt("usluga.cena")).thenReturn(1500).thenReturn(2000);
          when(rs.getInt("usluga.trajanje")).thenReturn(150).thenReturn(120);
-
+         
+         // usluge
+        when(rs.getInt("tipusluge.tipId")).thenReturn(1).thenReturn(2);
+        when(rs.getString("tipusluge.naziv")).thenReturn("Masaza").thenReturn("Frizura");
+       
+         
+        Klijent k1 = new Klijent(1, "Marko", "Markovic", "123456789", datum);
+        Klijent k2 = new Klijent(2, "Ana", "Jovanovic", "987654321",datum);
+        
+        Usluga u1=new Usluga(201, "Masaza", 150, 1500, new TipUsluge(1, "Masaza"));
+        Usluga u2=new Usluga(202, "Frizura", 120, 2000, new TipUsluge(2, "Frizura"));
+        
+        Popust p1=new Popust(k1, u1, 15, 10);
+        Popust p2=new Popust(k2, u2, 6, 5);
+        
         List<OpstiDomenskiObjekat> lista = p.vratiListu(rs);
 
         assertEquals(2, lista.size());
         assertTrue(lista.get(0) instanceof Popust);
         assertTrue(lista.get(1) instanceof Popust);
+        
+          assertEquals(lista.get(0), p1);
+          assertEquals(lista.get(1), p2);
         assertThrows(java.lang.Exception.class,
 				() -> p.vratiListu(null));
         

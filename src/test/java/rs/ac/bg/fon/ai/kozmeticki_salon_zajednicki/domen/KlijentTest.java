@@ -118,6 +118,8 @@ public class KlijentTest extends TestCase{
     @Test
     public void testVratiListu() throws SQLException, Exception {
         
+         Date datum=new Date();
+        java.sql.Date datumSQL=new java.sql.Date(datum.getTime());
         
         ResultSet rs = mock(ResultSet.class);
         when(rs.next()).thenReturn(true, true, false);
@@ -125,14 +127,19 @@ public class KlijentTest extends TestCase{
         when(rs.getString("klijent.ime")).thenReturn("Marko").thenReturn("Ana");
         when(rs.getString("klijent.prezime")).thenReturn("Markovic").thenReturn("Jovanovic");
         when(rs.getString("klijent.brTel")).thenReturn("123456789").thenReturn("987654321");
-        when(rs.getDate("klijent.datRodj")).thenReturn(new java.sql.Date(new Date().getTime()));
-
-  
+        when(rs.getDate("klijent.datRodj")).thenReturn(datumSQL);
+        
+        Klijent k1=new Klijent(1, "Marko", "Markovic", "123456789", datum);
+        Klijent k2=new Klijent(2, "Ana", "Jovanovic", "987654321", datum);
+        
         List<OpstiDomenskiObjekat> lista = k.vratiListu(rs);
 
         assertEquals(2, lista.size());
         assertTrue(lista.get(0) instanceof Klijent);
         assertTrue(lista.get(1) instanceof Klijent);
+        assertEquals(lista.get(0), k1);
+        assertEquals(lista.get(1), k2);
+        
         assertThrows(java.lang.Exception.class,
 				() -> k.vratiListu(null));
         

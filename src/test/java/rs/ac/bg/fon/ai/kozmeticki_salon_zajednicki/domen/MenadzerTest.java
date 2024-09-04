@@ -93,12 +93,17 @@ public class MenadzerTest extends TestCase {
         when(rs.getString("menadzer.username")).thenReturn("marko").thenReturn("ana");
          when(rs.getString("menadzer.password")).thenReturn("marko").thenReturn("ana");
   
+         
+         Menadzer m1=new Menadzer(1, "marko", "marko", "Marko", "Markovic");
+         Menadzer m2=new Menadzer(2, "ana", "ana", "Ana", "Jovanovic");
+         
         List<OpstiDomenskiObjekat> lista = m.vratiListu(rs);
 
         assertEquals(2, lista.size());
         assertTrue(lista.get(0) instanceof Menadzer);
         assertTrue(lista.get(1) instanceof Menadzer);
-        
+        assertEquals(lista.get(0), m1);
+        assertEquals(lista.get(1), m2);
        assertThrows(java.lang.Exception.class,
 				() -> m.vratiListu(null));
         
