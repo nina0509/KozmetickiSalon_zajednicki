@@ -15,6 +15,7 @@ import static org.mockito.Mockito.when;
 public class KlijentTest extends TestCase{
 
    public Klijent k;
+   
     public KlijentTest(String testName) {
         
         super( testName );
@@ -27,7 +28,8 @@ public class KlijentTest extends TestCase{
 	}
 
 	@AfterEach
-	public void tearDown() throws Exception {
+        @Override
+  	public void tearDown() throws Exception {
 		k=null;
 	}
     
@@ -100,6 +102,10 @@ public class KlijentTest extends TestCase{
         assertEquals(klijent1, klijent2);
         assertNotEquals(klijent1, klijent3);
         assertNotEquals(klijent2, klijent3);
+        assertNotEquals(klijent1, null);
+        assertNotEquals(klijent1,new Menadzer());
+       
+        
 
     }
 
@@ -111,6 +117,8 @@ public class KlijentTest extends TestCase{
 
     @Test
     public void testVratiListu() throws SQLException, Exception {
+        
+        
         ResultSet rs = mock(ResultSet.class);
         when(rs.next()).thenReturn(true, true, false);
         when(rs.getInt("klijent.klijentId")).thenReturn(1).thenReturn(2);
@@ -125,6 +133,10 @@ public class KlijentTest extends TestCase{
         assertEquals(2, lista.size());
         assertTrue(lista.get(0) instanceof Klijent);
         assertTrue(lista.get(1) instanceof Klijent);
+        assertThrows(java.lang.Exception.class,
+				() -> k.vratiListu(null));
+        
+        
     }
 
     @Test
@@ -141,6 +153,7 @@ public class KlijentTest extends TestCase{
         assertEquals(expected, k.vratiVrednostiZaUpdate());
     }
 
+    
     @Test
     public void testVratiVrednostiZaInsert() {
         k = new Klijent(1, "Marko", "Markovic", "123456789", new Date());
