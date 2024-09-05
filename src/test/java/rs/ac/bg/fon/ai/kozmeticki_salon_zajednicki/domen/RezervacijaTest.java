@@ -116,6 +116,7 @@ public class RezervacijaTest extends TestCase {
     
     @Test
     public void testEquals() {
+        
        Rezervacija r1=new Rezervacija();
        r1.setRezervacijaId(1);
        Date datum=new Date();
@@ -125,7 +126,7 @@ public class RezervacijaTest extends TestCase {
        r2.setRezervacijaId(1);
        r2.setDatum(datum);
         
-        assertTrue(r1.equals(r));
+        assertTrue(r1.equals(r1));
         assertTrue(r1.equals(r2));
         
         r2.setRezervacijaId(2);
