@@ -180,4 +180,72 @@ public class StatistikaTest extends TestCase {
         assertEquals("statistika.godina=2002", s.vratiPrimarniKljuc());
     }
 
+    @Test
+    public void testSerijalizacija() {
+
+        Statistika s1 = new Statistika(2021, 2);
+        Usluga u1 = new Usluga(1, "klasican manikir", 120, 1200, new TipUsluge(1, "manikir"));
+        StavkaStatistike ss1 = new StavkaStatistike(s1, u1, 2);
+
+        List<StavkaStatistike> stavke1 = new ArrayList<>();
+        stavke1.add(ss1);
+        s1.setStavke(stavke1);
+
+        Statistika s2 = new Statistika(2022, 3);
+        Usluga u2 = new Usluga(2, "klasican pedikir", 100, 1000, new TipUsluge(2, "pedikir"));
+        StavkaStatistike ss2 = new StavkaStatistike(s2, u2, 3);
+
+        List<StavkaStatistike> stavke2 = new ArrayList<>();
+        stavke2.add(ss2);
+        s2.setStavke(stavke2);
+
+        List<Statistika> stat = new ArrayList<>();
+        stat.add(s1);
+        stat.add(s2);
+        System.out.println(stat);
+
+        String a = s.serijalizujJSON(stat);
+
+        String expected = "[{\"godina\":2021,\"ukupnoRezervacija\":2,\"stavke\":[{\"usluga\":{},\"brojRezUsluge\":2}]},{\"godina\":2022,\"ukupnoRezervacija\":3,\"stavke\":[{\"usluga\":{},\"brojRezUsluge\":3}]}]";
+
+        assertEquals(expected, a);
+
+        List<Statistika> rez1 = s.deserijalizujJSON("src/test/resources/statistika.json");
+        assertEquals(rez1.get(0), stat.get(0));
+        assertEquals(rez1.get(1), stat.get(1));
+
+    }
+
+    @Test
+    public void testDeserijalizacija() {
+
+        Statistika s1 = new Statistika(2021, 2);
+        Usluga u1 = new Usluga(1, "klasican manikir", 120, 1200, new TipUsluge(1, "manikir"));
+        StavkaStatistike ss1 = new StavkaStatistike(s1, u1, 2);
+
+        List<StavkaStatistike> stavke1 = new ArrayList<>();
+        stavke1.add(ss1);
+        s1.setStavke(stavke1);
+
+        Statistika s2 = new Statistika(2022, 3);
+        Usluga u2 = new Usluga(2, "klasican pedikir", 100, 1000, new TipUsluge(2, "pedikir"));
+        StavkaStatistike ss2 = new StavkaStatistike(s2, u2, 3);
+
+        List<StavkaStatistike> stavke2 = new ArrayList<>();
+        stavke2.add(ss2);
+        s2.setStavke(stavke2);
+
+        List<Statistika> stat = new ArrayList<>();
+        stat.add(s1);
+        stat.add(s2);
+
+        String a = s.serijalizujJSON(stat);
+
+        List<Statistika> rez = s.deserijalizujJSON("src/test/resources/statistika.json");
+        assertEquals(2, rez.size());
+        assertEquals(rez.get(0), stat.get(0));
+        assertEquals(rez.get(1), stat.get(1));
+
+    }
+
 }

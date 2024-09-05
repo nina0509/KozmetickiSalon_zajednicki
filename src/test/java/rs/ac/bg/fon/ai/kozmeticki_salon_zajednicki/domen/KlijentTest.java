@@ -6,34 +6,37 @@ import java.util.List;
 import junit.framework.TestCase;
 import static org.junit.jupiter.api.Assertions.*;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import static junit.framework.Assert.assertEquals;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class KlijentTest extends TestCase{
+public class KlijentTest extends TestCase {
 
-   public Klijent k;
-   
+    public Klijent k;
+
     public KlijentTest(String testName) {
-        
-        super( testName );
+
+        super(testName);
     }
 
     @BeforeEach
-     @Override
-	public void setUp() throws Exception {
-		k=new Klijent();
-	}
+    @Override
+    public void setUp() throws Exception {
+        k = new Klijent();
+    }
 
-	@AfterEach
-        @Override
-  	public void tearDown() throws Exception {
-		k=null;
-	}
-    
-	
+    @AfterEach
+    @Override
+    public void tearDown() throws Exception {
+        k = null;
+    }
+
     @Test
     public void testKonstruktorSaParametrima() {
         Date datumRodj = new Date();
@@ -47,20 +50,20 @@ public class KlijentTest extends TestCase{
 
     @Test
     public void testKonstruktorBezParametara() {
-         k = new Klijent();
+        k = new Klijent();
         assertNotNull(k);
     }
 
     @Test
     public void testSetGetKlijentId() {
-     
+
         k.setKlijentId(1);
         assertEquals(1, k.getKlijentId());
     }
 
     @Test
     public void testSetGetIme() {
-       
+
         k.setIme("Ana");
         assertEquals("Ana", k.getIme());
     }
@@ -74,7 +77,7 @@ public class KlijentTest extends TestCase{
 
     @Test
     public void testSetGetBrTel() {
-       
+
         k.setBrTel("987654321");
         assertEquals("987654321", k.getBrTel());
     }
@@ -98,30 +101,28 @@ public class KlijentTest extends TestCase{
         Klijent klijent1 = new Klijent(1, "Marko", "Markovic", "123456789", new Date());
         Klijent klijent2 = new Klijent(1, "Marko", "Markovic", "123456789", new Date());
         Klijent klijent3 = new Klijent(2, "Ana", "Jovanovic", "987654321", new Date());
-       
-          assertEquals(klijent1, klijent1);
+
+        assertEquals(klijent1, klijent1);
         assertEquals(klijent1, klijent2);
         assertNotEquals(klijent1, klijent3);
         assertNotEquals(klijent2, klijent3);
         assertNotEquals(klijent1, null);
-        assertNotEquals(klijent1,new Menadzer());
-       
-        
+        assertNotEquals(klijent1, new Menadzer());
 
     }
 
     @Test
     public void testVratiNazivTabele() {
-    
+
         assertEquals("klijent", k.vratiNazivTabele());
     }
 
     @Test
     public void testVratiListu() throws SQLException, Exception {
-        
-         Date datum=new Date();
-        java.sql.Date datumSQL=new java.sql.Date(datum.getTime());
-        
+
+        Date datum = new Date();
+        java.sql.Date datumSQL = new java.sql.Date(datum.getTime());
+
         ResultSet rs = mock(ResultSet.class);
         when(rs.next()).thenReturn(true, true, false);
         when(rs.getInt("klijent.klijentId")).thenReturn(1).thenReturn(2);
@@ -129,10 +130,10 @@ public class KlijentTest extends TestCase{
         when(rs.getString("klijent.prezime")).thenReturn("Markovic").thenReturn("Jovanovic");
         when(rs.getString("klijent.brTel")).thenReturn("123456789").thenReturn("987654321");
         when(rs.getDate("klijent.datRodj")).thenReturn(datumSQL);
-        
-        Klijent k1=new Klijent(1, "Marko", "Markovic", "123456789", datum);
-        Klijent k2=new Klijent(2, "Ana", "Jovanovic", "987654321", datum);
-        
+
+        Klijent k1 = new Klijent(1, "Marko", "Markovic", "123456789", datum);
+        Klijent k2 = new Klijent(2, "Ana", "Jovanovic", "987654321", datum);
+
         List<OpstiDomenskiObjekat> lista = k.vratiListu(rs);
 
         assertEquals(2, lista.size());
@@ -140,28 +141,26 @@ public class KlijentTest extends TestCase{
         assertTrue(lista.get(1) instanceof Klijent);
         assertEquals(lista.get(0), k1);
         assertEquals(lista.get(1), k2);
-        
+
         assertThrows(java.lang.Exception.class,
-				() -> k.vratiListu(null));
-        
-        
+                () -> k.vratiListu(null));
+
     }
 
     @Test
     public void testVratiKoloneZaInsert() {
-        
+
         assertEquals("ime,prezime,brTel,datRodj", k.vratiKoloneZaInsert());
     }
 
     @Test
     public void testVratiVrednostiZaUpdate() {
-       k= new Klijent(1, "Marko", "Markovic", "123456789", new Date());
+        k = new Klijent(1, "Marko", "Markovic", "123456789", new Date());
         java.sql.Date datum = new java.sql.Date(k.getDatRodj().getTime());
         String expected = "ime='Marko', prezime='Markovic', brTel='123456789', datRodj='" + datum + "'";
         assertEquals(expected, k.vratiVrednostiZaUpdate());
     }
 
-    
     @Test
     public void testVratiVrednostiZaInsert() {
         k = new Klijent(1, "Marko", "Markovic", "123456789", new Date());
@@ -172,9 +171,54 @@ public class KlijentTest extends TestCase{
 
     @Test
     public void testVratiPrimarniKljuc() {
-      k = new Klijent(1, "Marko", "Markovic", "123456789", new Date());
+        k = new Klijent(1, "Marko", "Markovic", "123456789", new Date());
         assertEquals("klijent.klijentId=1", k.vratiPrimarniKljuc());
     }
+
+    @Test
+    public void testSerijalizacija() {
+
+        LocalDateTime localDateTime = LocalDateTime.of(2024, 9, 5, 14, 30, 0); // Godina, mesec, dan, sati, minuti, sekunde
+        Date datum = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+
+        Klijent k1 = new Klijent(1, "Marko", "Markovic", "123456789", datum);
+        Klijent k2 = new Klijent(2, "Ana", "Jovanovic", "987654321", datum);
+
+        List<Klijent> rez = new ArrayList<>();
+        rez.add(k1);
+        rez.add(k2);
+
+        String a = k.serijalizujJSON(rez);
+        System.out.println(a);
+        String expected = "[{\"klijentId\":1,\"ime\":\"Marko\",\"prezime\":\"Markovic\",\"brTel\":\"123456789\",\"datRodj\":\"Sep 5, 2024, 2:30:00 PM\"},{\"klijentId\":2,\"ime\":\"Ana\",\"prezime\":\"Jovanovic\",\"brTel\":\"987654321\",\"datRodj\":\"Sep 5, 2024, 2:30:00 PM\"}]";
+
+        assertEquals(expected, a);
+
+        List<Klijent> rez1 = k.deserijalizujJSON("src/test/resources/klijenti.json");
+        assertEquals(rez1.get(0), rez.get(0));
+        assertEquals(rez1.get(1), rez.get(1));
+
+    }
+
+    @Test
+    public void testDeserijalizacija() {
+
+        LocalDateTime localDateTime = LocalDateTime.of(2024, 9, 5, 14, 30, 0); // Godina, mesec, dan, sati, minuti, sekunde
+        Date datum = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+
+        Klijent k1 = new Klijent(1, "Marko", "Markovic", "123456789", datum);
+        Klijent k2 = new Klijent(2, "Ana", "Jovanovic", "987654321", datum);
+
+        List<Klijent> rez1 = new ArrayList<>();
+        rez1.add(k1);
+        rez1.add(k2);
+
+        List<Klijent> rez = k.deserijalizujJSON("src/test/resources/klijenti.json");
+
+        assertEquals(2, rez.size());
+        assertEquals(rez1.get(0), rez.get(0));
+        assertEquals(rez1.get(1), rez.get(1));
+
+    }
+
 }
-
-

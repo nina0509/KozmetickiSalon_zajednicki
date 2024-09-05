@@ -4,6 +4,7 @@
  */
 package rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen;
 
+import com.google.gson.annotations.Expose;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +26,17 @@ public class StavkaStatistike implements OpstiDomenskiObjekat{
     /** 
      * Statistika kojoj pripada stavka statistike.
      */
+    
     Statistika statistika;
     /** 
      * Usluga na koju se odnosi stavka statistike.
      */
+    @Expose
     Usluga usluga;
     /** 
      * Broj rezervacija usluge u datoj godini.
      */
+    @Expose
     int brojRezUsluge=0;
 
     /**

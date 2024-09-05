@@ -5,6 +5,14 @@
 package rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.reflect.TypeToken;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +29,18 @@ public class Statistika implements OpstiDomenskiObjekat {
      /** 
       * Godina na koju se odnose statistički podaci.
       */
+    @Expose
     private int godina;
 
     /** 
      * Ukupan broj rezervacija za zadatu godinu. 
      */
+    @Expose
     private int ukupnoRezervacija;
       /** 
        * Lista stavki statistike koje su deo statistike za tu godinu. 
        */
+    @Expose
     List<StavkaStatistike> stavke=new ArrayList<>();
 
     /**
@@ -219,7 +230,51 @@ return "statistika";
 
     }
     
-    
+    /**
+     * Vraca JSON reprezentaciju liste statistika i upisuje je u odgovarajuci fajl .
+     * 
+     * @param lista Lista statistika za upisivanje u fajl i kreiranje JSON reprezentacije.
+     * @return JSON reprezentacija liste statistika kao String.
+     */
+    public String serijalizujJSON(List<Statistika> lista) {
+
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create(); 
+        String a=null;
+        try (FileWriter writer = new FileWriter("src/test/resources/statistika.json")) {
+           a=gson.toJson(lista);
+            writer.write(a);
+           
+           
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+          return a;    
+    }
+
+     /**
+     * Ucitava listu statistika iz JSON fajla sa prosledjene putanje.
+     * 
+     * @param putanja Putanja na kojoj se nalazi JSON fajl sa rezervacijama.
+     * @return JSON reprezentacija liste statistika kao String.
+     */
+        public List<Statistika> deserijalizujJSON(String putanja) {
+
+         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create(); 
+        List<Statistika> statistike = null;
+
+        try (FileReader reader = new FileReader(putanja)) {
+            
+            Type reservationListType = new TypeToken<List<Statistika>>() {}.getType();
+            statistike = gson.fromJson(reader, reservationListType); 
+           
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return statistike;
+        
+        
+        }
     
     
 }
