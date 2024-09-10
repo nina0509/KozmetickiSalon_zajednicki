@@ -132,6 +132,7 @@ public class StavkaStatistike implements OpstiDomenskiObjekat{
             return false;
         }
         if (getClass() != obj.getClass()) {
+           
             return false;
         }
         final StavkaStatistike other = (StavkaStatistike) obj;

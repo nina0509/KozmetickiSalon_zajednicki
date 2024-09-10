@@ -215,6 +215,7 @@ public class Klijent implements OpstiDomenskiObjekat {
      *
      * @return Naziv tabele "klijent" kao String.
      */
+    
     @Override
     public String vratiNazivTabele() {
         return "klijent";

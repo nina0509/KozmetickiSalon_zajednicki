@@ -222,6 +222,7 @@ public class Rezervacija implements OpstiDomenskiObjekat {
      * 
      * @return Naziv tabele "rezervacija" kao String.
      */
+    
     @Override
     public String vratiNazivTabele() {
         return "rezervacija";

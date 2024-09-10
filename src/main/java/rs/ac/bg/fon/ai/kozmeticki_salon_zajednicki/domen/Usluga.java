@@ -178,7 +178,7 @@ public class Usluga implements OpstiDomenskiObjekat {
             return false;
         }
       
-        return Objects.equals(this.naziv.trim(), other.naziv.trim());
+        return Objects.equals(this.naziv, other.naziv);
     }
 
     @Override

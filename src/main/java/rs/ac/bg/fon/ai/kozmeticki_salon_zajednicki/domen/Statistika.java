@@ -148,6 +148,7 @@ public class Statistika implements OpstiDomenskiObjekat {
      * 
      * @return Naziv tabele "statistika" kao String.
      */
+  
     @Override
     public String vratiNazivTabele() {
 return "statistika";
