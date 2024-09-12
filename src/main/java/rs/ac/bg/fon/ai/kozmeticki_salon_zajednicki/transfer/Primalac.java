@@ -48,11 +48,24 @@ public class Primalac {
         return null;
     }
 
+    
+     /**
+     * Vraca soket preko kog se primaju podaci.
+     * 
+     * @return Socket preko kog se vracaju podaci.
+     */
     public Socket getSocket() {
         return socket;
     }
 
+    /**
+     * Postavlja soket preko kog se primaju podaci.
+     * 
+     * @param socket Novi socket preko kog se primaju podaci.
+     * @throws java.lang.NullPointerException Ako je novi socket null.
+     */
     public void setSocket(Socket socket) {
+        if(socket==null)throw new NullPointerException();
         this.socket = socket;
     }
     

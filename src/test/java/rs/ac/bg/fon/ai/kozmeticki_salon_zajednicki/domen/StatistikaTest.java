@@ -10,11 +10,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -25,21 +27,17 @@ import static org.mockito.Mockito.when;
  *
  * @author ninic
  */
-public class StatistikaTest extends TestCase {
+public class StatistikaTest{
 
     Statistika s;
 
-    public StatistikaTest(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() throws Exception {
         s = new Statistika();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() throws Exception {
         s = null;
     }
 
@@ -104,8 +102,8 @@ public class StatistikaTest extends TestCase {
         "2001, 2, 2001, 3,true",
         "2001, 2, 2001, 2,true",
         "2001, 2, 2002, 2,false",
-        "2001, 2, 2002, 3,false",})
-    void testEquals(int g1, int b1,
+        "2001, 2, 2002, 3,false"})
+   public void testEquals(int g1, int b1,
             int g2, int b2, boolean exp) {
         s = new Statistika(g1, b1);
         Statistika s1 = new Statistika(g2, b2);

@@ -3,7 +3,6 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen;
 import java.sql.ResultSet;
 import java.util.Date;
 import java.util.List;
-import junit.framework.TestCase;
 import static org.junit.jupiter.api.Assertions.*;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -11,30 +10,27 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import static junit.framework.Assert.assertEquals;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class KlijentTest extends TestCase {
+/**
+ *
+ * @author ninic
+ */
+public class KlijentTest{
 
     public Klijent k;
 
-    public KlijentTest(String testName) {
-
-        super(testName);
-    }
 
     @BeforeEach
-    @Override
     public void setUp() throws Exception {
         k = new Klijent();
-    }
 
+    }
     @AfterEach
-    @Override
     public void tearDown() throws Exception {
         k = null;
     }

@@ -4,28 +4,28 @@
  */
 package rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.transfer;
 
-import static junit.framework.Assert.assertNotNull;
-import junit.framework.TestCase;
+
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author ninic
  */
-public class OdgovorTest extends TestCase {
+public class OdgovorTest {
     
     Odgovor o;
-    public OdgovorTest(String testName) {
-        super(testName);
-    }
-    
-    @Override
-    protected void setUp() throws Exception {
+ 
+    @BeforeEach
+    public void setUp() throws Exception {
         o=new Odgovor();
     }
     
-    @Override
-    protected void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() throws Exception {
         o=null;
     }
 

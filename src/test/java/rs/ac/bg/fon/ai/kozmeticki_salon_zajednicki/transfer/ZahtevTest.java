@@ -4,8 +4,11 @@
  */
 package rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.transfer;
 
-import static junit.framework.Assert.assertNotNull;
-import junit.framework.TestCase;
+
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.config.Operacija;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Klijent;
@@ -14,21 +17,17 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Klijent;
  *
  * @author ninic
  */
-public class ZahtevTest extends TestCase {
+public class ZahtevTest {
 
     Zahtev z;
 
-    public ZahtevTest(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() throws Exception {
         z = new Zahtev();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() throws Exception {
         z = null;
     }
 
