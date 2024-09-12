@@ -112,16 +112,13 @@ public class Rezervacija implements OpstiDomenskiObjekat {
      * Postavlja datum za koji je kreirana rezervacija.
      *
      * @param datum Novi datum za koji je kreirana rezervacija kao Date.
-     * @throws java.lang.IllegalArgumentException Ako je novi datum u proslosti.
      * @throws java.lang.NullPointerException Ako je novi datum null.
      */
     public void setDatum(Date datum) {
         if (datum == null) {
             throw new NullPointerException();
         }
-        if (datum.before(new Date())) {
-            throw new IllegalArgumentException();
-        }
+        
         this.datum = datum;
     }
 

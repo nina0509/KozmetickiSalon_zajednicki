@@ -99,13 +99,6 @@ public class RezervacijaTest extends TestCase {
                 () -> r.setDatum(null));
     }
 
-    @Test
-    public void testSetDatUProslosti() {
-        Calendar myCalendar = new GregorianCalendar(2021, 2, 11);
-        Date datum = myCalendar.getTime();
-        assertThrows(java.lang.IllegalArgumentException.class,
-                () -> r.setDatum(datum));
-    }
 
     @Test
     public void testUkupnaCenaNegativna() {
