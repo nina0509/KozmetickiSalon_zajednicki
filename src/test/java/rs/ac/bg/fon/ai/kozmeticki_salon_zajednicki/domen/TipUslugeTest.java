@@ -6,8 +6,6 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -67,6 +65,24 @@ public class TipUslugeTest extends TestCase {
         assertEquals(1, tu.getTipId());
         assertEquals("manikir", tu.getNaziv());
 
+    }
+
+    @Test
+    public void testSetIdNegativan() {
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> tu.setTipId(-1));
+    }
+
+    @Test
+    public void testSetNazivKraciOd2() {
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> tu.setNaziv("A"));
+    }
+
+    @Test
+    public void testSetNazivNull() {
+        assertThrows(java.lang.NullPointerException.class,
+                () -> tu.setNaziv(null));
     }
 
     @ParameterizedTest

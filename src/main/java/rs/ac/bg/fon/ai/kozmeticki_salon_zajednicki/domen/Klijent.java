@@ -70,11 +70,12 @@ public class Klijent implements OpstiDomenskiObjekat {
     public Klijent(int klijentId, String ime, String prezime, String brTel,
             Date datRodj) {
 
-        this.klijentId = klijentId;
-        this.ime = ime;
-        this.prezime = prezime;
-        this.brTel = brTel;
-        this.datRodj = datRodj;
+        this.setKlijentId(klijentId);
+        this.setIme(ime);
+        this.setPrezime(prezime);
+        this.setBrTel(brTel);
+        this.setDatRodj(datRodj);
+
     }
 
     /**
@@ -96,8 +97,12 @@ public class Klijent implements OpstiDomenskiObjekat {
      * Postavlja ID klijenta na prosledjenu vrednost.
      *
      * @param klijentId Novi ID klijenta kao ceo broj.
+     * @throws java.lang.IllegalArgumentException Ako je novi Id negativan broj.
      */
     public void setKlijentId(int klijentId) {
+        if (klijentId < 0) {
+            throw new IllegalArgumentException();
+        }
         this.klijentId = klijentId;
     }
 
@@ -114,8 +119,18 @@ public class Klijent implements OpstiDomenskiObjekat {
      * Postavlja ime klijenta na prosledjenu vrednost.
      *
      * @param ime Novo ime klijenta kao String.
+     * @throws java.lang.IllegalArgumentException Ako novo ime duzine manje od 2
+     * karaktera.
+     * @throws java.lang.NullPointerException Ako je novo ime null.
      */
     public void setIme(String ime) {
+
+        if (ime == null) {
+            throw new NullPointerException();
+        }
+        if (ime.length() < 2) {
+            throw new IllegalArgumentException();
+        }
         this.ime = ime;
     }
 
@@ -132,8 +147,17 @@ public class Klijent implements OpstiDomenskiObjekat {
      * Postavlja prezime klijenta na prosledjenu vrednost.
      *
      * @param prezime Novo prezime klijenta kao String.
+     * @throws java.lang.IllegalArgumentException Ako novo prezime duzine manje
+     * od 2 karaktera.
+     * @throws java.lang.NullPointerException Ako je novo prezime null.
      */
     public void setPrezime(String prezime) {
+        if (prezime == null) {
+            throw new NullPointerException();
+        }
+        if (prezime.length() < 2) {
+            throw new IllegalArgumentException();
+        }
         this.prezime = prezime;
     }
 
@@ -150,8 +174,17 @@ public class Klijent implements OpstiDomenskiObjekat {
      * Postavlja broj telefona klijenta na prosledjenu vrednost.
      *
      * @param brTel Novi broj telefona klijenta kao String.
+     * @throws java.lang.IllegalArgumentException Ako novi broj telefona duzine
+     * manje od 9 karaktera.
+     * @throws java.lang.NullPointerException Ako je novo prezime null.
      */
     public void setBrTel(String brTel) {
+        if (brTel == null) {
+            throw new NullPointerException();
+        }
+        if (brTel.length() < 2) {
+            throw new IllegalArgumentException();
+        }
         this.brTel = brTel;
     }
 
@@ -168,8 +201,17 @@ public class Klijent implements OpstiDomenskiObjekat {
      * Postavlja datum rodjenja klijenta na prosledjenu vrednost.
      *
      * @param datRodj Novi datum rodjenja klijenta kao Date.
+     * @throws java.lang.IllegalArgumentException Ako je novi datum rodjenja u
+     * buducnosti.
+     * @throws java.lang.NullPointerException Ako je novi datum rodjenja null.
      */
     public void setDatRodj(Date datRodj) {
+        if (datRodj == null) {
+            throw new NullPointerException();
+        }
+        if (datRodj.after(new Date())) {
+            throw new IllegalArgumentException();
+        }
         this.datRodj = datRodj;
     }
 
@@ -215,7 +257,6 @@ public class Klijent implements OpstiDomenskiObjekat {
      *
      * @return Naziv tabele "klijent" kao String.
      */
-    
     @Override
     public String vratiNazivTabele() {
         return "klijent";

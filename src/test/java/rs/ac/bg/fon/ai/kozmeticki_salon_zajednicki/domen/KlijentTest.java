@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import static junit.framework.Assert.assertEquals;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -62,10 +64,28 @@ public class KlijentTest extends TestCase {
     }
 
     @Test
+    public void testSetGetKlijentIdNegativan() {
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> k.setKlijentId(-1));
+    }
+
+    @Test
     public void testSetGetIme() {
 
         k.setIme("Ana");
         assertEquals("Ana", k.getIme());
+    }
+
+    @Test
+    public void testSetImeKraceOd2() {
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> k.setIme("A"));
+    }
+
+    @Test
+    public void testSetImeNULL() {
+        assertThrows(java.lang.NullPointerException.class,
+                () -> k.setIme(null));
     }
 
     @Test
@@ -76,6 +96,18 @@ public class KlijentTest extends TestCase {
     }
 
     @Test
+    public void testSetPrezimeKraceOd2() {
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> k.setPrezime("A"));
+    }
+
+    @Test
+    public void testSetPrezimeNULL() {
+        assertThrows(java.lang.NullPointerException.class,
+                () -> k.setPrezime(null));
+    }
+
+    @Test
     public void testSetGetBrTel() {
 
         k.setBrTel("987654321");
@@ -83,10 +115,36 @@ public class KlijentTest extends TestCase {
     }
 
     @Test
+    public void testSetBrTelKraceOd9() {
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> k.setBrTel(""));
+    }
+
+    @Test
+    public void testSetBrTelNull() {
+        assertThrows(java.lang.NullPointerException.class,
+                () -> k.setBrTel(null));
+    }
+
+    @Test
     public void testSetGetDatRodj() {
         Date datumRodj = new Date();
         k.setDatRodj(datumRodj);
         assertEquals(datumRodj, k.getDatRodj());
+    }
+
+    @Test
+    public void testSetDatRodjNull() {
+        assertThrows(java.lang.NullPointerException.class,
+                () -> k.setDatRodj(null));
+    }
+
+    @Test
+    public void testSetDatRodjUBuducnosti() {
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> k.setDatRodj(datum));
     }
 
     @Test

@@ -9,39 +9,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
 /**
- * Predstavlja uslugu sa jedinstvenim identifikatorom, nazivom usluge, trajanjem, cenom i tipom usluge.
- * 
- * Implementira interfejs OpstiDomenskiObjekat, koji definiše metode za 
+ * Predstavlja uslugu sa jedinstvenim identifikatorom, nazivom usluge,
+ * trajanjem, cenom i tipom usluge.
+ *
+ * Implementira interfejs OpstiDomenskiObjekat, koji definiše metode za
  * operacije nad bazom podataka.
- * 
+ *
  * @author Nikolina Baros
  */
 public class Usluga implements OpstiDomenskiObjekat {
 
     /**
- * Jedinstveni identifikator usluge.
- */
+     * Jedinstveni identifikator usluge.
+     */
     private int uslugaId;
-    
+
     /**
- * Naziv usluge.
- */
+     * Naziv usluge.
+     */
     private String naziv;
-    
+
     /**
- * Trajanje usluge u minutima.
- */
+     * Trajanje usluge u minutima.
+     */
     private int trajanje;
-    
+
     /**
- * Cena usluge.
- */
+     * Cena usluge.
+     */
     private int cena;
     /**
- * Tip usluge, kao što je manikir, pedikir...
- */
+     * Tip usluge, kao što je manikir, pedikir...
+     */
     private TipUsluge tip;
 
     /**
@@ -50,9 +50,9 @@ public class Usluga implements OpstiDomenskiObjekat {
     public Usluga() {
     }
 
-     /**
+    /**
      * Kreira novu uslugu sa zadatim parametrima.
-     * 
+     *
      * @param uslugaId Identifikator usluge.
      * @param naziv Naziv usluge.
      * @param trajanje Trajanje usluge u minutima.
@@ -60,16 +60,16 @@ public class Usluga implements OpstiDomenskiObjekat {
      * @param tip Tip usluge.
      */
     public Usluga(int uslugaId, String naziv, int trajanje, int cena, TipUsluge tip) {
-        this.uslugaId = uslugaId;
-        this.naziv = naziv;
-        this.trajanje = trajanje;
-        this.cena = cena;
-        this.tip = tip;
+        this.setCena(cena);
+        this.setNaziv(naziv);
+        this.setTrajanje(trajanje);
+        this.setTip(tip);
+        this.setUslugaId(uslugaId);
     }
 
     /**
      * Vraća identifikator usluge.
-     * 
+     *
      * @return Identifikator usluge kao ceo broj.
      */
     public int getUslugaId() {
@@ -78,69 +78,93 @@ public class Usluga implements OpstiDomenskiObjekat {
 
     /**
      * Postavlja identifikator usluge na prosledjenu vrednost.
-     * 
+     *
      * @param uslugaId Novi identifikator usluge kao ceo broj.
+     * @throws java.lang.IllegalArgumentException Ako je novi id negativan broj.
      */
     public void setUslugaId(int uslugaId) {
+        if (uslugaId < 0) {
+            throw new IllegalArgumentException();
+        }
         this.uslugaId = uslugaId;
     }
-/**
+
+    /**
      * Vraća naziv usluge.
-     * 
+     *
      * @return Naziv usluge kao String.
      */
     public String getNaziv() {
         return naziv;
     }
 
-      /**
+    /**
      * Postavlja naziv usluge na prosledjenu vrednost.
-     * 
+     *
      * @param naziv Novi naziv usluge kao String.
+     * @throws java.lang.IllegalArgumentException Ako novi naziv duzine manje od
+     * 2 karaktera.
+     * @throws java.lang.NullPointerException Ako je novi naziv null.
      */
     public void setNaziv(String naziv) {
+        if (naziv == null) {
+            throw new NullPointerException();
+        }
+        if (naziv.length() < 2) {
+            throw new IllegalArgumentException();
+        }
         this.naziv = naziv;
     }
 
     /**
      * Vraća trajanje usluge u minutima.
-     * 
+     *
      * @return Trajanje usluge u minutima kao ceo broj.
      */
     public int getTrajanje() {
         return trajanje;
     }
 
-     /**
+    /**
      * Postavlja trajanje usluge u minutima na prosledjenu vrednost.
-     * 
+     *
      * @param trajanje Novo trajanje usluge u minutima kao ceo broj.
+     * @throws java.lang.IllegalArgumentException Ako je novo trajanje negativan
+     * broj.
      */
     public void setTrajanje(int trajanje) {
+        if (trajanje < 0) {
+            throw new IllegalArgumentException();
+        }
         this.trajanje = trajanje;
     }
 
     /**
      * Vraća cenu usluge.
-     * 
+     *
      * @return Cena usluge kao ceo broj.
      */
     public int getCena() {
         return cena;
     }
 
-      /**
+    /**
      * Postavlja cenu usluge na prosledjenu vrednost.
-     * 
+     *
      * @param cena Nova cena usluge kao ceo broj.
+     * @throws java.lang.IllegalArgumentException Ako je nova cena usluge
+     * negativan broj.
      */
     public void setCena(int cena) {
+        if (cena < 0) {
+            throw new IllegalArgumentException();
+        }
         this.cena = cena;
     }
 
     /**
      * Vraća tip usluge.
-     * 
+     *
      * @return Tip usluge kao instanca klase TipUsluge.
      */
     public TipUsluge getTip() {
@@ -149,10 +173,14 @@ public class Usluga implements OpstiDomenskiObjekat {
 
     /**
      * Postavlja tip usluge na prosledjenu vrednost.
-     * 
+     *
      * @param tip Novi tip usluge kao instanca klase TipUsluge.
+     * @throws java.lang.NullPointerException Ako je novi tip usluge null.
      */
     public void setTip(TipUsluge tip) {
+        if (tip == null) {
+            throw new NullPointerException();
+        }
         this.tip = tip;
     }
 
@@ -177,7 +205,7 @@ public class Usluga implements OpstiDomenskiObjekat {
         if (this.uslugaId != other.uslugaId) {
             return false;
         }
-      
+
         return Objects.equals(this.naziv, other.naziv);
     }
 
@@ -188,7 +216,7 @@ public class Usluga implements OpstiDomenskiObjekat {
 
     /**
      * Vraca naziv tabele u bazi podataka koja odgovara klasi Usluga.
-     * 
+     *
      * @return Naziv tabele "usluga" kao String.
      */
     @Override
@@ -196,10 +224,9 @@ public class Usluga implements OpstiDomenskiObjekat {
         return "usluga";
     }
 
-    
     /**
      * Kreira listu usluga na osnovu rezultata upita iz baze podataka.
-     * 
+     *
      * @param rs Rezultat upita iz baze podataka u obliku ResultSet-a.
      * @return Lista usluga kreirana na osnovu rezultata upita.
      * @throws Exception u slucaju greske tokom obrade rezultata upita.
@@ -228,10 +255,10 @@ public class Usluga implements OpstiDomenskiObjekat {
         return lista;
     }
 
-    
-     /**
-     * Vraca nazive kolona koje se koriste prilikom unosa podataka u tabelu Usluga u bazi.
-     * 
+    /**
+     * Vraca nazive kolona koje se koriste prilikom unosa podataka u tabelu
+     * Usluga u bazi.
+     *
      * @return Nazivi kolona tabele usluga kao String.
      */
     @Override
@@ -239,9 +266,10 @@ public class Usluga implements OpstiDomenskiObjekat {
         return "naziv,trajanje,cena,tipId";
     }
 
-     /**
-     * Vraca vrednosti koje se koriste prilikom azuriranja podataka u tabeli Usluga u bazi.
-     * 
+    /**
+     * Vraca vrednosti koje se koriste prilikom azuriranja podataka u tabeli
+     * Usluga u bazi.
+     *
      * @return Vrednosti za azuriranje podataka u tabeli usluga kao String.
      */
     @Override
@@ -249,20 +277,21 @@ public class Usluga implements OpstiDomenskiObjekat {
         return "naziv='" + naziv + "', trajanje=" + trajanje + ", cena=" + cena + ", tipId=" + tip.getTipId();
     }
 
-     /**
-     * Vraca vrednosti koje se koriste prilikom unosa podataka u tabelu Usluga u bazi.
-     * 
+    /**
+     * Vraca vrednosti koje se koriste prilikom unosa podataka u tabelu Usluga u
+     * bazi.
+     *
      * @return Vrednosti za unos podataka u tabelu usluga u bazi kao String.
      */
-    
     @Override
     public String vratiVrednostiZaInsert() {
         return "'" + naziv + "'," + trajanje + "," + cena + "," + tip.getTipId();
     }
 
     /**
-     * Vraca primarni kljuc koji se koristi za identifikaciju zapisa u tabeli Usluga u bazi .
-     * 
+     * Vraca primarni kljuc koji se koristi za identifikaciju zapisa u tabeli
+     * Usluga u bazi .
+     *
      * @return Primarni kljuc tabele usluga kao String.
      */
     @Override
@@ -270,5 +299,4 @@ public class Usluga implements OpstiDomenskiObjekat {
         return "usluga.uslugaId=" + uslugaId;
     }
 
-  
 }

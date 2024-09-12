@@ -6,8 +6,6 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -68,6 +66,24 @@ public class StavkaStatistikeTest extends TestCase {
         assertEquals(u, ss.getUsluga());
         assertEquals(2, ss.getBrojRezUsluge());
 
+    }
+    
+    @Test
+    public void testStatistikaNULL() {
+        assertThrows(java.lang.NullPointerException.class,
+                () -> ss.setStatistika(null)); 
+    }
+    
+    @Test
+    public void testUslugaNULL() {
+        assertThrows(java.lang.NullPointerException.class,
+                () -> ss.setUsluga(null)); 
+    }
+    
+    @Test
+    public void testSetBrojRezUslugeNegativan() {
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> ss.setBrojRezUsluge(-1)); 
     }
 
     @Test

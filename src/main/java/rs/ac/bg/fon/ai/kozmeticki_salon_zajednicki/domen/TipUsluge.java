@@ -11,47 +11,43 @@ import java.util.Objects;
 
 /**
  * Predstavlja tip usluge koji sadrzi podatke o identifikatoru i nazivu tipa.
- * 
- * Implementira interfejs OpstiDomenskiObjekat, koji definiše metode za 
+ *
+ * Implementira interfejs OpstiDomenskiObjekat, koji definiše metode za
  * operacije nad bazom podataka.
- * 
+ *
  * @author Nikolina Baros
  */
-
 public class TipUsluge implements OpstiDomenskiObjekat {
 
-    /** 
+    /**
      * Jedinstveni identifikator tipa usluge.
      */
     private int tipId;
-    /** 
-     *  Naziv tipa usluge.
+    /**
+     * Naziv tipa usluge.
      */
     private String naziv;
 
-   
-     /**
+    /**
      * Kreira novi tip usluge sa zadatim identifikatorom i nazivom.
-     * 
+     *
      * @param tipId Identifikator tipa usluge.
      * @param naziv Naziv tipa usluge.
      */
     public TipUsluge(int tipId, String naziv) {
-        this.tipId = tipId;
-        this.naziv = naziv;
+        this.setNaziv(naziv);
+        this.setTipId(tipId);
     }
-    
-    
+
     /**
      * Kreira novi tip usluge bez zadatih vrednosti.
      */
- public TipUsluge() {
+    public TipUsluge() {
     }
 
- 
     /**
      * Vraća jedinstveni identifikator tipa usluge.
-     * 
+     *
      * @return Identifikator tipa usluge kao ceo broj.
      */
     public int getTipId() {
@@ -60,27 +56,41 @@ public class TipUsluge implements OpstiDomenskiObjekat {
 
     /**
      * Postavlja identifikator tipa usluge na prosledjenu vrednost.
-     * 
+     *
      * @param tipId Identifikator tipa usluge kao ceo broj.
+     * @throws java.lang.IllegalArgumentException Ako je novi id negativan broj.
      */
     public void setTipId(int tipId) {
+        if (tipId < 0) {
+            throw new IllegalArgumentException();
+        }
         this.tipId = tipId;
     }
 
-     /**
+    /**
      * Vraća naziv tipa usluge.
-     * 
+     *
      * @return Naziv tipa usluge kao string.
      */
     public String getNaziv() {
         return naziv;
     }
-/**
+
+    /**
      * Postavlja naziv tipa usluge na prosledjenu vrednost.
-     * 
+     *
      * @param naziv Naziv tipa usluge kao String.
+     * @throws java.lang.IllegalArgumentException Ako novi naziv duzine manje od
+     * 2 karaktera.
+     * @throws java.lang.NullPointerException Ako je novi naziv null.
      */
     public void setNaziv(String naziv) {
+        if (naziv == null) {
+            throw new NullPointerException();
+        }
+        if (naziv.length() < 2) {
+            throw new IllegalArgumentException();
+        }
         this.naziv = naziv;
     }
 
@@ -109,9 +119,10 @@ public class TipUsluge implements OpstiDomenskiObjekat {
     public String toString() {
         return naziv;
     }
- /**
+
+    /**
      * Vraca naziv tabele u bazi podataka koja odgovara klasi TipUsluge.
-     * 
+     *
      * @return Naziv tabele "tipusluge" kao String.
      */
     @Override
@@ -119,10 +130,9 @@ public class TipUsluge implements OpstiDomenskiObjekat {
         return "tipusluge";
     }
 
-       
- /**
+    /**
      * Kreira listu tipova usluge na osnovu rezultata upita iz baze podataka.
-     * 
+     *
      * @param rs Rezultat upita iz baze podataka u obliku ResultSet-a.
      * @return Lista tipova usluge kreirana na osnovu rezultata upita.
      * @throws Exception u slucaju greske tokom obrade rezultata upita.
@@ -143,9 +153,10 @@ public class TipUsluge implements OpstiDomenskiObjekat {
         return lista;
     }
 
-     /**
-     * Vraca nazive kolona koje se koriste prilikom unosa podataka u tabelu TipUsluge u bazi.
-     * 
+    /**
+     * Vraca nazive kolona koje se koriste prilikom unosa podataka u tabelu
+     * TipUsluge u bazi.
+     *
      * @return Nazivi kolona tabele tipusluge kao String.
      */
     @Override
@@ -153,10 +164,10 @@ public class TipUsluge implements OpstiDomenskiObjekat {
         return "naziv";
     }
 
-    
     /**
-     * Vraca vrednosti koje se koriste prilikom azuriranja podataka u tabeli TipUsluge u bazi.
-     * 
+     * Vraca vrednosti koje se koriste prilikom azuriranja podataka u tabeli
+     * TipUsluge u bazi.
+     *
      * @return Vrednosti za azuriranje podataka u tabeli tipusluge kao String.
      */
     @Override
@@ -164,28 +175,26 @@ public class TipUsluge implements OpstiDomenskiObjekat {
         return "naziv='" + naziv + "'";
     }
 
-    
     /**
-     * Vraca vrednosti koje se koriste prilikom unosa podataka u tabelu TipUsluge u bazi.
-     * 
+     * Vraca vrednosti koje se koriste prilikom unosa podataka u tabelu
+     * TipUsluge u bazi.
+     *
      * @return Vrednosti za unos podataka u tabelu tipusluge u bazi kao String.
      */
-    
     @Override
     public String vratiVrednostiZaInsert() {
         return naziv;
     }
 
-    
-      /**
-     * Vraca primarni kljuc koji se koristi za identifikaciju zapisa u tabeli TipUsluge u bazi .
-     * 
+    /**
+     * Vraca primarni kljuc koji se koristi za identifikaciju zapisa u tabeli
+     * TipUsluge u bazi .
+     *
      * @return Primarni kljuc tabele tipusluge kao String.
      */
     @Override
     public String vratiPrimarniKljuc() {
         return "tipusluge.tipId=" + tipId;
     }
-
 
 }

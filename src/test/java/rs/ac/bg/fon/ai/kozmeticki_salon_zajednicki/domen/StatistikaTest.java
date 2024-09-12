@@ -6,6 +6,7 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -73,6 +74,31 @@ public class StatistikaTest extends TestCase {
 
     }
 
+    @Test
+    public void testGodinaNegativanBr() {
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> s.setGodina(-1));
+    }
+
+    @Test
+    public void testGodinaPosleTreutne() {
+        int tren = LocalDate.now().getYear() + 1;
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> s.setGodina(tren));
+    }
+
+    @Test
+    public void testUkupnoRezervacijaNegativanBr() {
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> s.setUkupnoRezervacija(-1));
+    }
+
+    @Test
+    public void testStavkeNull() {
+        assertThrows(java.lang.NullPointerException.class,
+                () -> s.setStavke(null));
+    }
+
     @ParameterizedTest
     @CsvSource({
         "2001, 2, 2001, 3,true",
@@ -113,7 +139,7 @@ public class StatistikaTest extends TestCase {
     public void testToString() {
         s = new Statistika(2001, 2);
         List<StavkaStatistike> lista = new ArrayList<>();
-        lista.add(new StavkaStatistike(s, null, 5));
+        lista.add(new StavkaStatistike(s, new Usluga(), 5));
         s.setStavke(lista);
         String expected = "Statistika{" + "godina=2001, ukupnoRezervacija=2, stavke=" + s.getStavke().toString() + '}';
 

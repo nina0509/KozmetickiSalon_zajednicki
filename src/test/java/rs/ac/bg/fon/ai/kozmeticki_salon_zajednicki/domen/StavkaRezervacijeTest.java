@@ -8,16 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalTime;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import junit.framework.TestCase;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.when;
 
@@ -48,8 +47,10 @@ public class StavkaRezervacijeTest extends TestCase {
     @Test
     public void testKonstruktorSaParametrima() {
 
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
         Usluga u = new Usluga(1, "klasican manikir", 120, 1200, new TipUsluge(1, "manikir"));
-        Rezervacija r = new Rezervacija(1, new Date(), 1200, true, new Klijent());
+        Rezervacija r = new Rezervacija(1, datum, 1200, true, new Klijent());
 
         sr = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MAX, 1200, u);
 
@@ -64,9 +65,10 @@ public class StavkaRezervacijeTest extends TestCase {
 
     @Test
     public void testGetSetSve() {
-
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
         Usluga u = new Usluga(1, "klasican manikir", 120, 1200, new TipUsluge(1, "manikir"));
-        Rezervacija r = new Rezervacija(1, new Date(), 1200, true, new Klijent());
+        Rezervacija r = new Rezervacija(1, datum, 1200, true, new Klijent());
 
         sr.setRBStavke(1);
         sr.setCena(1200);
@@ -85,10 +87,48 @@ public class StavkaRezervacijeTest extends TestCase {
     }
 
     @Test
+    public void testRezervacijaNULL() {
+        assertThrows(java.lang.NullPointerException.class,
+                () -> sr.setRezervacija(null));
+    }
+
+    @Test
+    public void testSetRBStavkeNegativan() {
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> sr.setRBStavke(-1));
+    }
+
+    @Test
+    public void testVremePocetkaNULL() {
+        assertThrows(java.lang.NullPointerException.class,
+                () -> sr.setVremePocetka(null));
+    }
+
+    @Test
+    public void testVremeZavrsetkaNULL() {
+        assertThrows(java.lang.NullPointerException.class,
+                () -> sr.setVremeZavrsetka(null));
+    }
+
+    @Test
+    public void testCenaNegativna() {
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> sr.setCena(-1));
+    }
+
+    @Test
+    public void testUslugaNULL() {
+        assertThrows(java.lang.NullPointerException.class,
+                () -> sr.setUsluga(null));
+    }
+
+    @Test
     public void testToString() {
 
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
         Usluga u = new Usluga(1, "klasican manikir", 120, 1200, new TipUsluge(1, "manikir"));
-        Rezervacija r = new Rezervacija(1, new Date(), 1200, true, new Klijent());
+        Rezervacija r = new Rezervacija(1, datum, 1200, true, new Klijent());
 
         sr = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MAX, 1200, u);
 
@@ -107,10 +147,12 @@ public class StavkaRezervacijeTest extends TestCase {
     @Test
     public void testEquals() {
 
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
         Usluga u1 = new Usluga(1, "klasican manikir", 120, 1200, new TipUsluge(1, "manikir"));
         Usluga u2 = new Usluga(2, "klasican pedikir", 120, 1200, new TipUsluge(2, "pedikir"));
 
-        Rezervacija r = new Rezervacija(1, new Date(), 1200, true, new Klijent());
+        Rezervacija r = new Rezervacija(1, datum, 1200, true, new Klijent());
 
         sr = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MAX, 1200, u1);
 
@@ -138,8 +180,13 @@ public class StavkaRezervacijeTest extends TestCase {
 
         ResultSet rs = Mockito.mock(ResultSet.class);
 
-        Date datum = new Date();
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
         java.sql.Date datumSql = new java.sql.Date(datum.getTime());
+
+        Calendar myCalendar1 = new GregorianCalendar(2021, 2, 11);
+        Date datum1 = myCalendar1.getTime();
+        java.sql.Date datumSql1 = new java.sql.Date(datum1.getTime());
 
         LocalTime pocetak = LocalTime.MIN;
         java.sql.Time pocetakSQL = Time.valueOf(pocetak);
@@ -148,7 +195,7 @@ public class StavkaRezervacijeTest extends TestCase {
 
         java.sql.Time krajSQL = Time.valueOf(kraj);
 
-        when(rs.next()).thenReturn(true).thenReturn(false); 
+        when(rs.next()).thenReturn(true).thenReturn(false);
 
         // stavke rezervacije
         when(rs.getInt("stavkarezervacije.RBstavke")).thenReturn(1);
@@ -161,7 +208,7 @@ public class StavkaRezervacijeTest extends TestCase {
         when(rs.getString("klijent.ime")).thenReturn("Marko");
         when(rs.getString("klijent.prezime")).thenReturn("Markovic");
         when(rs.getString("klijent.brTel")).thenReturn("0612345678");
-        when(rs.getDate("klijent.datRodj")).thenReturn(datumSql);
+        when(rs.getDate("klijent.datRodj")).thenReturn(datumSql1);
 
         //  rezervacija
         when(rs.getInt("rezervacija.rezervacijaId")).thenReturn(1);
@@ -179,7 +226,7 @@ public class StavkaRezervacijeTest extends TestCase {
         when(rs.getInt("tipusluge.tipId")).thenReturn(1);
         when(rs.getString("tipusluge.naziv")).thenReturn("Kosa");
 
-        Klijent k = new Klijent(1, "Marko", "Markovic", "0612345678", datum);
+        Klijent k = new Klijent(1, "Marko", "Markovic", "0612345678", datum1);
         Rezervacija r = new Rezervacija(1, datum, 1200, true, k);
         Usluga u = new Usluga(1, "Frizura", 120, 1200, new TipUsluge(1, "Kosa"));
         StavkaRezervacije stavkaRezervacije = new StavkaRezervacije(1, r, pocetak, kraj, 1200, u);
@@ -205,9 +252,10 @@ public class StavkaRezervacijeTest extends TestCase {
 
     @Test
     public void testVratiVrednostiZaUpdate() {
-
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
         Usluga u = new Usluga(1, "klasican manikir", 120, 1200, new TipUsluge(1, "manikir"));
-        Rezervacija r = new Rezervacija(1, new Date(), 1200, true, new Klijent());
+        Rezervacija r = new Rezervacija(1, datum, 1200, true, new Klijent());
 
         sr = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MAX, 1200, u);
 
@@ -219,8 +267,10 @@ public class StavkaRezervacijeTest extends TestCase {
 
     @Test
     public void testVratiVrednostiZaInsert() {
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
         Usluga u = new Usluga(1, "klasican manikir", 120, 1200, new TipUsluge(1, "manikir"));
-        Rezervacija r = new Rezervacija(1, new Date(), 1200, true, new Klijent());
+        Rezervacija r = new Rezervacija(1, datum, 1200, true, new Klijent());
 
         sr = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MAX, 1200, u);
         java.sql.Time vreme1 = java.sql.Time.valueOf(LocalTime.MIN);
@@ -233,7 +283,9 @@ public class StavkaRezervacijeTest extends TestCase {
 
     @Test
     public void testVratiPrimarniKljuc() {
-        Rezervacija r = new Rezervacija(1, new Date(), 1200, true, new Klijent());
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
+        Rezervacija r = new Rezervacija(1, datum, 1200, true, new Klijent());
         Usluga u = new Usluga(1, "klasican manikir", 120, 1200, new TipUsluge(1, "manikir"));
 
         sr = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MAX, 1200, u);

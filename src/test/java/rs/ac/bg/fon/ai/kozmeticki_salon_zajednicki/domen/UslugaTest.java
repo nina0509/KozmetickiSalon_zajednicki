@@ -23,20 +23,21 @@ import static org.mockito.Mockito.when;
  * @author ninic
  */
 public class UslugaTest extends TestCase {
-    
+
     Usluga u;
+
     public UslugaTest(String testName) {
         super(testName);
     }
-    
+
     @Override
     protected void setUp() throws Exception {
-        u=new Usluga();
+        u = new Usluga();
     }
-    
+
     @Override
     protected void tearDown() throws Exception {
-        u=null;
+        u = null;
     }
 
     @Test
@@ -44,46 +45,77 @@ public class UslugaTest extends TestCase {
 
         assertNotNull(u);
     }
-    
-    
-    
+
     @Test
     public void testKonstruktorSaParametrima() {
 
         TipUsluge tu = new TipUsluge(1, "manikir");
-        u=new Usluga(1, "klasican manikir", 120, 1200, tu);
-        
-        assertEquals(1, u.getUslugaId());
-        assertEquals("klasican manikir", u.getNaziv());
-         assertEquals(120, u.getTrajanje());
-         assertEquals(1200, u.getCena());
-         assertEquals(tu, u.getTip());
+        u = new Usluga(1, "klasican manikir", 120, 1200, tu);
 
-    }
-    
-    
-    
-    @Test
-    public void testGetSetSve() {
-
-        TipUsluge tu = new TipUsluge(1, "manikir");
-         
-        u.setCena(1200);
-        u.setNaziv("klasican manikir");
-        u.setTrajanje(120);
-        u.setUslugaId(1);
-        u.setTip(tu);
-        
         assertEquals(1, u.getUslugaId());
         assertEquals("klasican manikir", u.getNaziv());
         assertEquals(120, u.getTrajanje());
         assertEquals(1200, u.getCena());
         assertEquals(tu, u.getTip());
-        
 
     }
-    
-     @ParameterizedTest
+
+    @Test
+    public void testGetSetSve() {
+
+        TipUsluge tu = new TipUsluge(1, "manikir");
+
+        u.setCena(1200);
+        u.setNaziv("klasican manikir");
+        u.setTrajanje(120);
+        u.setUslugaId(1);
+        u.setTip(tu);
+
+        assertEquals(1, u.getUslugaId());
+        assertEquals("klasican manikir", u.getNaziv());
+        assertEquals(120, u.getTrajanje());
+        assertEquals(1200, u.getCena());
+        assertEquals(tu, u.getTip());
+
+    }
+
+    @Test
+    public void testSetIdNegativan() {
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> u.setUslugaId(-1));
+    }
+
+    @Test
+    public void testSetNazivKraciOd2() {
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> u.setNaziv("A"));
+    }
+
+    @Test
+    public void testSetNazivNull() {
+        assertThrows(java.lang.NullPointerException.class,
+                () -> u.setNaziv(null));
+    }
+
+    @Test
+    public void testTrajanjeNegativanBr() {
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> u.setTrajanje(-1));
+    }
+
+    @Test
+    public void testCenaNegativanBr() {
+        assertThrows(java.lang.IllegalArgumentException.class,
+                () -> u.setCena(-1));
+    }
+
+    @Test
+    public void testSetTipUslugeNull() {
+        assertThrows(java.lang.NullPointerException.class,
+                () -> u.setTip(null));
+    }
+
+    @ParameterizedTest
     @CsvSource({
         "1, manikir, 1, manikir,true",
         "1, manikir, 2, manikir,false",
@@ -94,16 +126,15 @@ public class UslugaTest extends TestCase {
 
         u.setUslugaId(id1);
         u.setNaziv(n1);
-        
-        Usluga u1=new Usluga();
+
+        Usluga u1 = new Usluga();
         u1.setUslugaId(id2);
         u1.setNaziv(n2);
-       
+
         assertEquals(exp, u1.equals(u));
 
     }
-    
-    
+
     @Test
     public void testEqualsNull() {
 
@@ -124,34 +155,31 @@ public class UslugaTest extends TestCase {
         assertTrue(u.equals(u));
 
     }
-    
-    
+
     @Test
     public void testToString() {
-        
+
         TipUsluge tu = new TipUsluge(1, "manikir");
-        u=new Usluga(1, "klasican manikir", 120, 1200, tu);
-        
+        u = new Usluga(1, "klasican manikir", 120, 1200, tu);
+
         String expected = "klasican manikir";
 
         assertEquals(expected, u.toString());
 
     }
-    
-    
+
     @Test
     public void testVratiNazivTabele() {
 
         assertEquals("usluga", u.vratiNazivTabele());
     }
-    
-    
+
     @Test
     public void testVratiListu() throws SQLException, Exception {
 
         ResultSet rs = mock(ResultSet.class);
-        
-        when(rs.next()).thenReturn(true).thenReturn(true).thenReturn(false); 
+
+        when(rs.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(rs.getInt("tipusluge.tipId")).thenReturn(1).thenReturn(2);
         when(rs.getString("tipusluge.naziv")).thenReturn("manikir").thenReturn("pedikir");
 
@@ -159,14 +187,13 @@ public class UslugaTest extends TestCase {
         when(rs.getString("usluga.naziv")).thenReturn("klasican manikir").thenReturn("klasican pedikir");
         when(rs.getInt("usluga.trajanje")).thenReturn(120).thenReturn(100);
         when(rs.getInt("usluga.cena")).thenReturn(1200).thenReturn(1000);
-        
-       TipUsluge tu1 = new TipUsluge(1, "manikir");
-       TipUsluge tu2=new TipUsluge(2, "pedikir");
 
-      Usluga u1=new Usluga(1, "klasican manikir", 120, 1200, tu1);
-      Usluga u2=new Usluga(2, "klasican pedikir", 100, 1000, tu2);
+        TipUsluge tu1 = new TipUsluge(1, "manikir");
+        TipUsluge tu2 = new TipUsluge(2, "pedikir");
 
-        
+        Usluga u1 = new Usluga(1, "klasican manikir", 120, 1200, tu1);
+        Usluga u2 = new Usluga(2, "klasican pedikir", 100, 1000, tu2);
+
         List<OpstiDomenskiObjekat> lista = u.vratiListu(rs);
 
         assertEquals(2, lista.size());
@@ -179,9 +206,8 @@ public class UslugaTest extends TestCase {
                 () -> u.vratiListu(null));
 
     }
-    
-    
-     @Test
+
+    @Test
     public void testVratiKoloneZaInsert() {
 
         assertEquals("naziv,trajanje,cena,tipId", u.vratiKoloneZaInsert());
@@ -191,7 +217,7 @@ public class UslugaTest extends TestCase {
     public void testVratiVrednostiZaUpdate() {
 
         TipUsluge tu = new TipUsluge(1, "manikir");
-        u=new Usluga(1, "klasican manikir", 120, 1200, tu);
+        u = new Usluga(1, "klasican manikir", 120, 1200, tu);
 
         String expected = "naziv='klasican manikir', trajanje=120, cena=1200, tipId=1";
         assertEquals(expected, u.vratiVrednostiZaUpdate());
@@ -199,22 +225,19 @@ public class UslugaTest extends TestCase {
 
     @Test
     public void testVratiVrednostiZaInsert() {
-          TipUsluge tu = new TipUsluge(1, "manikir");
-        u=new Usluga(1, "klasican manikir", 120, 1200, tu);
+        TipUsluge tu = new TipUsluge(1, "manikir");
+        u = new Usluga(1, "klasican manikir", 120, 1200, tu);
 
-        String expected =  "'klasican manikir',120,1200,1";
+        String expected = "'klasican manikir',120,1200,1";
         assertEquals(expected, u.vratiVrednostiZaInsert());
     }
 
     @Test
     public void testVratiPrimarniKljuc() {
         TipUsluge tu = new TipUsluge(1, "manikir");
-        u=new Usluga(1, "klasican manikir", 120, 1200, tu);
+        u = new Usluga(1, "klasican manikir", 120, 1200, tu);
 
         assertEquals("usluga.uslugaId=1", u.vratiPrimarniKljuc());
     }
 
-
-  
-    
 }
